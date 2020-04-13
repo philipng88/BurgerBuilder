@@ -1,11 +1,9 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import BuildControl from './BuildControl/BuildControl';
 import classes from './BuildControls.module.css';
 
 const controls = [
   {
-    id: uuidv4(),
     label: (
       <span>
         Lettuce <i className="fas fa-leaf" style={{ color: '#228c1d' }}></i>
@@ -14,7 +12,6 @@ const controls = [
     type: 'lettuce',
   },
   {
-    id: uuidv4(),
     label: (
       <span>
         Bacon <i className="fas fa-bacon" style={{ color: '#bf3813' }}></i>
@@ -23,7 +20,6 @@ const controls = [
     type: 'bacon',
   },
   {
-    id: uuidv4(),
     label: (
       <span>
         Cheese <i className="fas fa-cheese" style={{ color: '#f4d004' }}></i>
@@ -32,7 +28,6 @@ const controls = [
     type: 'cheese',
   },
   {
-    id: uuidv4(),
     label: (
       <span>
         Meat{' '}
@@ -53,25 +48,26 @@ const BuildControls = (props) => {
     ordered,
   } = props;
 
+  const { BuildControls, OrderButton } = classes;
+
   return (
-    <div className={classes.BuildControls}>
+    <div className={BuildControls}>
       <p>
         Current Price: <strong>${price.toFixed(2)}</strong>
       </p>
-      {controls.map((control) => (
-        <BuildControl
-          key={control.id}
-          label={control.label}
-          add={() => addIngredient(control.type)}
-          remove={() => removeIngredient(control.type)}
-          disabled={disabled[control.type]}
-        />
-      ))}
-      <button
-        className={classes.OrderButton}
-        disabled={!purchasable}
-        onClick={ordered}
-      >
+      {controls.map((control) => {
+        const { type, label } = control;
+        return (
+          <BuildControl
+            key={type}
+            label={label}
+            add={() => addIngredient(type)}
+            remove={() => removeIngredient(type)}
+            disabled={disabled[type]}
+          />
+        );
+      })}
+      <button className={OrderButton} disabled={!purchasable} onClick={ordered}>
         order now
       </button>
     </div>
