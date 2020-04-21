@@ -1,0 +1,33 @@
+.Auth {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.ErrorMessage {
+  color: red;
+  font-weight: bold;
+}
+
+.SwitchAuthModeButton {
+  background-color: transparent;
+  border: none;
+  color: #944317;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 10px 10px 0;
+  margin: 0 10px 10px 0;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+@media (min-width: 600px) {
+  .Auth {
+    width: 500px;
+  }
+}

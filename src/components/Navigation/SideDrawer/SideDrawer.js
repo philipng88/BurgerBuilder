@@ -5,7 +5,7 @@ import Backdrop from '../../UI/Backdrop/Backdrop';
 import classes from './SideDrawer.module.css';
 
 const SideDrawer = (props) => {
-  const { open, closed } = props;
+  const { open, closed, isAuth } = props;
 
   return (
     <>
@@ -19,7 +19,7 @@ const SideDrawer = (props) => {
           <Logo />
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={isAuth} />
         </nav>
       </div>
     </>
