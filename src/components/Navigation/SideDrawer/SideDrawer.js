@@ -14,6 +14,7 @@ const SideDrawer = (props) => {
         className={`${classes.SideDrawer} ${
           open ? classes.Open : classes.Close
         }`}
+        onClick={closed}
       >
         <div className={classes.Logo}>
           <Logo />
