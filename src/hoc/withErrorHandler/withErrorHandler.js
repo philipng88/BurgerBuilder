@@ -1,45 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Modal from '../../components/UI/Modal/Modal';
+import useHttpErrorHandler from '../../hooks/http-error-handler';
 
-const withErrorHandler = (WrappedComponent, axios) =>
-  class extends Component {
-    state = { error: null };
-
-    UNSAFE_componentWillMount() {
-      this.reqInterceptor = axios.interceptors.request.use((req) => {
-        this.setState({ error: null });
-        return req;
-      });
-      this.resInterceptor = axios.interceptors.response.use(
-        (res) => res,
-        (error) => this.setState({ error })
-      );
-    }
-
-    componentWillUnmount() {
-      axios.interceptors.request.eject(this.reqInterceptor);
-      axios.interceptors.response.eject(this.resInterceptor);
-    }
-
-    errorConfirmedHandler = () => this.setState({ error: null });
-
-    render() {
-      return (
-        <>
-          <Modal
-            show={this.state.error}
-            modalClosed={this.errorConfirmedHandler}
-          >
-            {this.state.error && (
-              <span style={{ color: 'red', fontWeight: 'bold' }}>
-                {this.state.error.message}
-              </span>
-            )}
-          </Modal>
-          <WrappedComponent {...this.props} />
-        </>
-      );
-    }
-  };
+const withErrorHandler = (WrappedComponent, axios) => (props) => {
+  const [error, clearError] = useHttpErrorHandler(axios);
+  return (
+    <>
+      <Modal show={error} modalClosed={clearError}>
+        {error && (
+          <span style={{ color: 'red', fontWeight: 'bold' }}>
+            {error.message}
+          </span>
+        )}
+      </Modal>
+      <WrappedComponent {...props} />
+    </>
+  );
+};
 
 export default withErrorHandler;
